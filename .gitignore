@@ -1,0 +1,19 @@
+# Logs
+logs
+**/*.log
+
+# Configs
+config/**/*
+!config/example-default.json
+
+# Dependencies
+node_modules
+
+# IDE
+.idea
+
+# Compiles
+es5/**/*
+!es5/.gitkeep
+public/scripts.js
+public/styles.css

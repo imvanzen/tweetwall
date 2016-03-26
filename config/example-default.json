@@ -1,0 +1,12 @@
+{
+  "tweet-wall": {
+    "app": {
+      "host": "localhost",
+      "port": 8080
+    },
+    "webpack": {
+      "host": "localhost",
+      "port": 3000
+    }
+  }
+}

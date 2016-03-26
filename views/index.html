@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TweetWall</title>
+  <meta name="description" content="TweetWall">
+  <meta name="author" content="Jakub Reczko">
+  <meta name="keywords" content="tweet wall">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon.png">
+  {% if process.env.NODE_ENV === 'production' %}
+  <link rel="stylesheet" href="/styles.css"/>
+  {% endif %}
+</head>
+<body>
+<div id="TweetWall"></div>
+
+{% if process.env.NODE_ENV === 'production' %}
+<script src="/scripts.js"></script>
+{% else %}
+<script src="http://{{config.webpack.host}}:{{config.webpack.port}}/public/scripts.js"></script>
+{% endif %}
+</body>
+</html>
