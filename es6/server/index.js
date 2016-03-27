@@ -13,8 +13,8 @@ import middlewares from './middlewares'
 import routes from './routes'
 
 const app = Promise.promisifyAll(express())
-const debug = nodeDebug('tweet-wall:app')
-const {host, port} = config.get('tweet-wall.app')
+const debug = nodeDebug('tweetwall:app')
+const {host, port} = config.get('tweetwall.app')
 
 app.engine('html', swig.renderFile)
 app.set('view engine', 'html')

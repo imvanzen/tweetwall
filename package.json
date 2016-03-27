@@ -1,5 +1,5 @@
 {
-  "name": "tweet-wall",
+  "name": "tweetwall",
   "version": "1.0.0",
   "description": "Implementation of tweet wall",
   "engines": {
@@ -10,8 +10,8 @@
     "build-client": "NODE_ENV=production node_modules/.bin/babel-node node_modules/.bin/webpack --config webpack/webpack.config.js --optimize-minimize --optimize-dedupe --progress --colors",
     "build-server": "NODE_ENV=production node_modules/.bin/babel -d es5 es6",
     "build": "npm run build-client && npm run build-server",
-    "dev-server": "DEBUG=tweet-wall:* node_modules/.bin/nodemon -w es6 node_modules/.bin/babel-node es6/server",
-    "dev-client": "DEBUG=tweet-wall:* node_modules/.bin/babel-node webpack",
+    "dev-server": "DEBUG=tweetwall:* node_modules/.bin/nodemon -w es6 node_modules/.bin/babel-node es6/server",
+    "dev-client": "DEBUG=tweetwall:* node_modules/.bin/babel-node webpack",
     "dev": "npm run dev-server & npm run dev-client",
     "start": "NODE_ENV=production node es5/server",
     "test": "echo \"No tests implemented yet\" && exit 1",
@@ -19,14 +19,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/imvanzen/tweet-wall.git"
+    "url": "git+https://github.com/imvanzen/tweetwall.git"
   },
   "author": " <contact@jakubreczko.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/imvanzen/tweet-wall/issues"
+    "url": "https://github.com/imvanzen/tweetwall/issues"
   },
-  "homepage": "https://github.com/imvanzen/tweet-wall#readme",
+  "homepage": "https://github.com/imvanzen/tweetwall#readme",
   "devDependencies": {
     "babel-cli": "^6.4.0",
     "babel-eslint": "^5.0.0",
@@ -60,7 +60,8 @@
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
     "react-router": "~0.13.2",
-    "swig": "^1.4.2"
+    "swig": "^1.4.2",
+    "twitter-node-client": "0.0.6"
   },
   "babel": {
     "presets": [

@@ -2,7 +2,7 @@
 
 import config from 'config'
 
-const {host, port} = config.get('tweet-wall.webpack')
+const {host, port} = config.get('tweetwall.webpack')
 
 export default () => {
   return (req, res, next) => {

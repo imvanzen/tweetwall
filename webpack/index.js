@@ -8,8 +8,8 @@ import WebpackDevServer from 'webpack-dev-server'
 
 import webpackConfig from './webpack.config'
 
-const debug = nodeDebug('tweet-wall:webpack')
-const {host, port} = config.get('tweet-wall.webpack')
+const debug = nodeDebug('tweetwall:webpack')
+const {host, port} = config.get('tweetwall.webpack')
 
 Promise.promisifyAll([WebpackDevServer])
 

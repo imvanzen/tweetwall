@@ -5,7 +5,7 @@ import webpack from 'webpack'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import config from 'config'
 
-const {host, port} = config.get('tweet-wall.webpack')
+const {host, port} = config.get('tweetwall.webpack')
 const isProd = process.env.NODE_ENV === 'production'
 
 const plugins = (() => {
