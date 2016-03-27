@@ -12,6 +12,9 @@ import Promise from 'bluebird'
 
 import middlewares from './middlewares'
 import routes from './routes'
+import TwitterService from './services/twitterService'
+
+const twitterService = new TwitterService()
 
 const app = Promise.promisifyAll(express())
 const debug = nodeDebug('tweetwall:app')
@@ -29,16 +32,9 @@ app.use(express.static(path.resolve(__dirname, '../../public')))
 app.use('/', middlewares(), routes())
 
 app.ws('/timeline.io', (ws, req) => {
-  let i = 0
-  setInterval(() => {
-    const tweet = {
-      index: i,
-      author: '@imvanzen',
-      message: 'Lorem ipsum'
-    }
-    i++
+  twitterService.send((tweet) => {
     ws.send(JSON.stringify(tweet))
-  }, 3000)
+  })
 })
 
 app.listenAsync(port, host)
