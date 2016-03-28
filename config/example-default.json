@@ -2,7 +2,7 @@
   "tweetwall": {
     "app": {
       "host": "localhost",
-      "port": 8080
+      "port": 5000
     },
     "webpack": {
       "host": "localhost",
@@ -12,8 +12,7 @@
       "consumerKey": "XXX",
       "consumerSecret": "XXX",
       "accessToken": "XXX",
-      "accessTokenSecret": "XXX",
-      "callBackUrl": "XXX"
+      "accessTokenSecret": "XXX"
     }
   }
 }
