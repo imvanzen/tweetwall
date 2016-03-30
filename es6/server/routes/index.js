@@ -9,7 +9,7 @@ export default () => {
   const router = express.Router()
 
   router.get('/', (req, res) => {
-    debug('/')
+    debug('GET: /')
 
     return res.render('index')
   })
