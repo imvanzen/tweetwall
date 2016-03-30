@@ -13,8 +13,10 @@ import Promise from 'bluebird'
 import middlewares from './middlewares'
 import routes from './routes'
 import TwitterService from './services/twitterService'
+import FirebaseService from './services/firebaseService'
 
 const twitterService = new TwitterService()
+const tweetsFbInstance = new FirebaseService('tweets')
 
 const app = Promise.promisifyAll(express())
 const debug = nodeDebug('tweetwall:app')
@@ -32,9 +34,21 @@ app.use(express.static(path.resolve(__dirname, '../../public')))
 app.use('/', middlewares(), routes())
 
 app.ws('/timeline.io', (ws, req) => {
-  twitterService.send((tweet) => {
-    ws.send(JSON.stringify(tweet))
-  })
+  debug('/timeline.io')
+
+  twitterService.streamTweetsByHashtag('#javascript')
+    .then('tweet', (tweet) => {
+      debug('tweet', tweet.id)
+      return tweetsFbInstance.pushRecord(tweet)
+        .then(() => {
+          debug('tweet', tweet.id)
+          ws.send(JSON.stringify(tweet))
+        })
+    })
+    .catch((err) => {
+      debug(err)
+      ws.error(JSON.stringify({message: 'Internal server error!'}))
+    })
 })
 
 app.listenAsync(port, host)

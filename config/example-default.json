@@ -9,10 +9,13 @@
       "port": 3000
     },
     "twitter": {
-      "consumerKey": "XXX",
-      "consumerSecret": "XXX",
-      "accessToken": "XXX",
-      "accessTokenSecret": "XXX"
+      "consumer_key": "xxx",
+      "consumer_secret": "xxx",
+      "access_token": "xxx-xxx",
+      "access_token_secret": "xxx"
+    },
+    "firebase": {
+      "host": "https://xxx.firebaseio.com/"
     }
   }
 }

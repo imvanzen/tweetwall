@@ -56,13 +56,14 @@
     "express": "^4.13.4",
     "express-ws": "^1.0.0",
     "extract-text-webpack-plugin": "^1.0.1",
+    "firebase": "^2.4.1",
     "lodash": "^4.2.1",
     "morgan": "^1.6.1",
     "react": "^0.14.6",
     "react-dom": "^0.14.6",
     "react-router": "~0.13.2",
     "swig": "^1.4.2",
-    "twitter-stream-api": "^0.4.2"
+    "twit": "^2.2.3"
   },
   "babel": {
     "presets": [
