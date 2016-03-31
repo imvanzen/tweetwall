@@ -3,13 +3,18 @@
 import _ from 'lodash'
 import React, {Component} from 'react'
 
-const leadTileItem = ({id, name, account, tweetsCount, profileImgUrl}, index) => (
-  <div className='lead-item' key={index}>
-    <figure>
-      <img src={profileImgUrl} title={name} alt={name}/>
-    </figure>
-    <br />
-    {id}:{name}:{account}:{tweetsCount}
+const leadTileItem = ({id, name, screenName, tweetsCount, profileImage}, index) => (
+  <div className='lead-tile' key={index}>
+    <div className='tile-wrapper'>
+      <figure className='lead-profile-img'>
+        <img src={profileImage} title={name} alt={name}/>
+      </figure>
+      <div className='tile-metric'>
+        <div className='lead-name'>{name}</div>
+        <div className='lead-screen-name'>@{screenName}</div>
+        <div className='lead-tweets-count'>{tweetsCount} <span>{tweetsCount < 2 ? 'tweet' : 'tweets'}</span></div>
+      </div>
+    </div>
   </div>
 )
 
