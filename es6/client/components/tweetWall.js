@@ -1,88 +1,62 @@
 'use strict'
 
-import _ from 'lodash'
-import React, {Component, PropTypes} from 'react'
+import React, {Component} from 'react'
 
+import TweetsTiles from './tweetsTiles'
+import LeadsTiles from './leadsTiles'
+
+import {stringifyTags} from './../utils'
 import api from './../api'
-import {timeAgo, tweetFormat} from './../utils'
 
-const tweetItem = ({id, author, message, created}, index) => (
-  <div className='tweet-item' key={index}>
-    <b>{author}</b> tweets {timeAgo(created)}:
-    <br/>
-    <i>{tweetFormat(message)}</i>
-  </div>
-)
-
-const leadItem = ({id, name, account, tweetsCount, profileImgUrl}, index) => (
-  <div className='lead-item' key={index}>
-    <figure>
-      <img src={profileImgUrl} title={name} alt={name}/>
-    </figure>
-    <br />
-    {id}:{name}:{account}:{tweetsCount}
-  </div>
-)
-
-const header = (
-  <header className='main-header'>
-    <h3>Tweet Wall</h3>
-  </header>
-)
-
-const footer = (
-  <footer className='main-footer'>
-    <div>Created by <a href='http://imvanzen.com' title='I am vanzen'>vanzen</a></div>
-  </footer>
-)
-
-export default class CoreApplication extends Component {
+export default class TweetWall extends Component {
   constructor (props) {
     super(props)
 
     this.state = {
-      tweets: new Set(),
-      leads: new Set()
+      tweetsList: [],
+      leadsList: [],
+      tagsList: [
+        'saastech',
+        'voucherify',
+        'SaaSHeavyLifting',
+        'CloudifyAPI',
+        'rspective',
+        'ckcrspective'
+      ]
     }
-
-    this.timelineapi = api.timeline()
-  }
-
-  componentWillMount () {
-    this.timelineapi.onmessage = ({data}) => {
-      const {tweets} = this.state
-      console.log(JSON.parse(data))
-      this.setState({
-        tweets: tweets.add(JSON.parse(data))
-      })
-    }
-
-    this.timelineapi.onerror = (err) => {
-      console.error(err)
-    }
-  }
-
-  componentWillUnmount () {
-    console.log('Connection closed')
-    this.timelineapi.close()
   }
 
   render () {
-    const {tweets, leads} = this.state
+    const {tweetsList, leadsList, tagsList} = this.state
 
     return (
-      <div classID='tweetwall'>
-        {header}
+      <div>
+        {header(tagsList)}
         <section className='main-content'>
-          <div className='content-tweets'>
-            {_.map(Array.from(tweets), tweetItem)}
-          </div>
-          <div className='content-leads'>
-            {_.map(Array.from(leads), leadItem)}
-          </div>
+          <TweetsTiles tweetsList={tweetsList}/>
+          <LeadsTiles leadsList={leadsList}/>
         </section>
-        {footer}
+        {footer()}
       </div>
     )
   }
 }
+
+const header = (tagsList) => (
+  <header className='main-header'>
+    <figure className='header-logo'>
+      <img src='/img/rspective.png' alt='rspective'/>
+    </figure>
+    <div className='header-title-group'>
+      <h1 className='header-title'>Tweet Wall</h1>
+      <h2 className='header-subtitle'>Contribute to ours event</h2>
+    </div>
+    <h4 className='header-hashtags'>{stringifyTags(tagsList)}</h4>
+  </header>
+)
+
+const footer = () => (
+  <footer className='main-footer'>
+    <div>Created by <a href='http://imvanzen.com' title='I&apos;m vanzen'>vanzen</a></div>
+  </footer>
+)

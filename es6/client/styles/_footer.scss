@@ -1,0 +1,19 @@
+// _footer.scss
+@import "settings";
+
+.main-footer {
+  position: absolute;
+  bottom: 0;
+  height: 50px;
+  padding: 15px;
+  color: #9da0a4;
+
+  a {
+    color: $blue-4;
+    font-weight: bold;
+
+    &:hover {
+      color: $blue-3
+    }
+  }
+}

@@ -8,7 +8,12 @@ const tweetFormat = (message) => {
   return message // todo colorize all links, hashtags and insert emoji icons
 }
 
-export default {
+const stringifyTags = (tagsList) => {
+  return _.map(tagsList, (t) => `#${t}`).join('  ')
+}
+
+export {
   timeAgo,
-  tweetFormat
+  tweetFormat,
+  stringifyTags
 }

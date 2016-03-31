@@ -1,12 +1,27 @@
-html {
-  box-sizing: border-box;
-}
+// main.scss
+@import "settings";
+@import "header";
+@import "footer";
+@import "main_content";
+@import "tweets_tiles";
+@import "leads_tiles";
 
 *, *:before, *:after {
-  box-sizing: inherit;
+  box-sizing: border-box;
 }
 
 a {
   text-decoration: none;
 }
 
+.raleway {
+  font-family: 'Raleway', sans-serif;
+}
+
+.open-sans {
+  font-family: 'Open Sans', sans-serif;
+}
+
+body {
+  @extend .open-sans
+}
