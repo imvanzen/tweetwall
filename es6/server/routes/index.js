@@ -3,6 +3,8 @@
 import nodeDebug from 'debug'
 import express from 'express'
 
+import TweetsService from './../services/TweetsService'
+
 import {
   prepareWebsocketResponse
 } from './../utils'

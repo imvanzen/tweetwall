@@ -12,19 +12,19 @@ const twitterConfig = config.get('tweetwall.twitter')
 
 const timeout_ms = 60 * 1000
 
-export default class TwitterService extends Twit {
-  constructor (hashTags) {
+class TweetsService extends Twit {
+  constructor () {
     super(_.assign({}, twitterConfig, {timeout_ms}))
 
     this.lang = 'en'
-    this.hashTags = hashTags
+    this.hashTags = [
+      'javascript'
+    ]
+
+    this.startStreaming()
   }
 
   startStreaming () {
-
-  }
-
-  onTweet () {
     return new Promise((resolve, reject) => {
       const options = {
         track: this.hashTags,
@@ -36,6 +36,7 @@ export default class TwitterService extends Twit {
       this.stream('statuses/filter', options)
         .on('tweet', (tweet) => {
           debug('Received tweet', tweet.id)
+          TweetsDao.putTweet(tweet)
           resolve(tweet)
         })
         .on('error', (err) => reject(err))
@@ -44,3 +45,5 @@ export default class TwitterService extends Twit {
     })
   }
 }
+
+export default new TweetsService

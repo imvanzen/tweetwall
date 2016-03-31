@@ -1,26 +1,21 @@
 'use strict'
 
-import _ from 'lodash'
 import config from 'config'
 import nodeDebug from 'debug'
 import Firebase from 'firebase'
 import Fireproof from 'fireproof'
 import Promise from 'bluebird'
 
+import {
+  mapResponseToSet,
+  logAndThrowError,
+  passThrough
+} from './../utils'
+
 const debug = nodeDebug('tweetwall:services:tweetsDao')
 const {host} = config.get('tweetwall.firebase')
 
 Fireproof.bless(Promise)
-
-const mapResponseToSet = (snap) => {
-  const tweets = new Set()
-
-  _.each(snap, (s) => {
-    tweets.add(s.val())
-  })
-
-  return tweets
-}
 
 class TweetsDao {
   constructor (dbRef) {
@@ -29,20 +24,16 @@ class TweetsDao {
   }
 
   putTweet (tweet) {
-    return this.dbRef.child('tweets')
-      .push(tweet)
-      .catch((err) => {
-        debug('putTweet', err)
-      })
+    return this.dbRef
+      .child(`tweets/${tweet.id}`)
+      .set(tweet)
+      .then(passThrough, logAndThrowError(debug, 'putTweet'))
   }
 
   getTweets () {
     return this.dbRef.child('tweets')
       .once('value')
-      .then(mapResponseToSet)
-      .catch((err) => {
-        debug('getTweets', err)
-      })
+      .then(mapResponseToSet, logAndThrowError(debug, 'getTweets'))
   }
 }
 
