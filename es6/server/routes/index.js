@@ -4,6 +4,7 @@ import nodeDebug from 'debug'
 import express from 'express'
 
 import TweetsService from './../services/TweetsService'
+import TweetsWorker from './../services/TweetsWorker'
 
 import {
   prepareWebsocketResponse
@@ -23,22 +24,36 @@ export default () => {
   router.get('/tweets.json', (req, res) => {
     debug('GET: /tweets.json')
 
-    res.json({})
+    TweetsService.getTweets()
+      .then((tweetsList) => {
+        res.json(tweetsList)
+      })
+      .catch((err) => {
+        debug(err)
+        res.status(500).json({message: 'Internal Server Error!'})
+      })
   })
 
   router.get('/leads.json', (req, res) => {
     debug('GET: /leads.json')
 
-    res.json({})
+    TweetsService.getLeads()
+      .then((leadsList) => {
+        res.json(leadsList)
+      })
+      .catch((err) => {
+        debug(err)
+        res.status(500).json({message: 'Internal Server Error!'})
+      })
   })
 
   router.ws('/timeline.io', (ws, req) => {
     debug('WS: /timeline.io')
 
     ws.on('connected', () => {
-      setInterval(() => {
-        ws.send(prepareWebsocketResponse({}))
-      }, 3000)
+      TweetsWorker.on('error', (err) => {
+        ws.send(prepareWebsocketResponse(err))
+      })
     })
   })
 

@@ -12,7 +12,7 @@ import {
   passThrough
 } from './../utils'
 
-const debug = nodeDebug('tweetwall:services:tweetsDao')
+const debug = nodeDebug('tweetwall:services:TweetsDao')
 const {host} = config.get('tweetwall.firebase')
 
 Fireproof.bless(Promise)
@@ -34,6 +34,19 @@ class TweetsDao {
     return this.dbRef.child('tweets')
       .once('value')
       .then(mapResponseToSet, logAndThrowError(debug, 'getTweets'))
+  }
+
+  putLead (lead) {
+    return this.dbRef
+      .child(`leads/${lead.id}`)
+      .set(lead)
+      .then(passThrough, logAndThrowError(debug, 'putLead'))
+  }
+
+  getLeads () {
+    return this.dbRef.child('leads')
+      .once('value')
+      .then(mapResponseToSet, logAndThrowError(debug, 'getLead'))
   }
 }
 

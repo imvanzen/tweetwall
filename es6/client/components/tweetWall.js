@@ -13,6 +13,7 @@ export default class TweetWall extends Component {
     super(props)
 
     this.state = {
+      errMessage: null,
       tweetsList: [],
       leadsList: [],
       tagsList: [
@@ -26,8 +27,22 @@ export default class TweetWall extends Component {
     }
   }
 
+  componentWillMount () {
+    api.getTweets()
+      .then((tweetsList) => this.setState({tweetsList}))
+      .catch(({message: errorMessage}) => this.setState({errorMessage}))
+    api.getLeads()
+      .then((leadsList) => this.setState({leadsList}))
+      .catch(({message: errorMessage}) => this.setState({errorMessage}))
+  }
+
   render () {
-    const {tweetsList, leadsList, tagsList} = this.state
+    const {
+      errorMessage,
+      leadsList,
+      tagsList,
+      tweetsList
+    } = this.state
 
     return (
       <div>
@@ -37,6 +52,7 @@ export default class TweetWall extends Component {
           <LeadsTiles leadsList={leadsList}/>
         </section>
         {footer()}
+        {errorMessage && errorAlert(errorMessage)}
       </div>
     )
   }
@@ -59,4 +75,8 @@ const footer = () => (
   <footer className='main-footer'>
     <div>Created by <a href='http://imvanzen.com' title='I&apos;m vanzen'>vanzen</a></div>
   </footer>
+)
+
+const errorAlert = (errorMessage) => (
+  <div className='main-error'>{errorMessage}</div>
 )

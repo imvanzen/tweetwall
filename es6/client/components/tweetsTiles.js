@@ -16,7 +16,9 @@ const tweetTileItem = ({id, author, message, created}, index) => (
 export default class TweetsTiles extends Component {
   render () {
     const {tweetsList} = this.props
-    
+
+    console.log(tweetsList)
+
     return (
       <div className='tweets-tiles'>
         {_.map(tweetsList, tweetTileItem)}

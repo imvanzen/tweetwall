@@ -12,7 +12,12 @@ const stringifyTags = (tagsList) => {
   return _.map(tagsList, (t) => `#${t}`).join('  ')
 }
 
+const extractDataFromResponse = ({data}) => {
+  return data
+}
+
 export {
+  extractDataFromResponse,
   timeAgo,
   tweetFormat,
   stringifyTags
