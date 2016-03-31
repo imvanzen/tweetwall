@@ -24,8 +24,6 @@ const tweetMap = (t) => ({
   timestamp: t.timestamp_ms
 })
 
-// todo parse tweets here before puts into base!!!
-
 class TweetsService {
   putTweet (tweet) {
     return TweetsDao.putTweet(tweet)
@@ -38,7 +36,13 @@ class TweetsService {
 
   getTweets () {
     return TweetsDao.getTweets()
-      .then((leadsList) => _.map(leadsList, tweetMap))
+      .then((tweetsList) => {
+        return _(tweetsList)
+          .takeRight(15)
+          .map(tweetMap)
+          .reverse()
+          .value()
+      })
       .catch((err) => {
         debug('getTweets', err)
       })
@@ -46,7 +50,13 @@ class TweetsService {
 
   getLeads () {
     return TweetsDao.getLeads()
-      .then((leadsList) => _.map(leadsList, leadMap))
+      .then((leadsList) => {
+        return _(leadsList)
+          .takeRight(10)
+          .map(leadMap)
+          .reverse()
+          .value()
+      })
       .catch((err) => {
         debug('getLeads', err)
       })

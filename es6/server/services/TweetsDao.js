@@ -39,12 +39,14 @@ class TweetsDao {
 
   getTweets () {
     return this.dbRef.child('tweets')
+      .orderByChild('timestamp_ms')
       .once('value')
       .then(mapResponseToArray, logAndThrowError(debug, 'getTweets'))
   }
 
   getLeads () {
     return this.dbRef.child('leads')
+      .orderByChild('tweets_count')
       .once('value')
       .then(mapResponseToArray, logAndThrowError(debug, 'getLeads'))
   }
