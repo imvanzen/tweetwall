@@ -8,18 +8,20 @@ import Twit from 'twit'
 import TweetsService from './TweetsService'
 
 const debug = nodeDebug('tweetwall:services:TweetsWorker')
-const twitterConfig = config.get('tweetwall.twitter')
+const {
+  auth: twitterAuth,
+  hashtags: twitterHashtags,
+  retweets
+} = config.get('tweetwall.twitter')
 
 const timeout_ms = 60 * 1000
 
 class TweetsWorker extends Twit {
   constructor () {
-    super(_.assign({}, twitterConfig, {timeout_ms}))
+    super(_.assign({}, twitterAuth, {timeout_ms}))
 
     this.lang = 'en'
-    this.hashTags = [
-      'javascript'
-    ]
+    this.hashTags = twitterHashtags
 
     return this.startWorking()
   }
@@ -34,7 +36,7 @@ class TweetsWorker extends Twit {
 
     return this.stream('statuses/filter', options)
       .on('tweet', (tweet) => {
-        if (_.isEmpty(tweet.retweeted_status)) {
+        if (retweets && _.isEmpty(tweet.retweeted_status)) {
           debug('processing tweet', tweet.id_str)
 
           TweetsService.putTweet(tweet)

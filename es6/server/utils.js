@@ -23,7 +23,7 @@ const logAndThrowError = (debug, logMessage) => {
 const mapResponseToArray = (fbSnap) => {
   const newArray = []
 
-  _.each(fbSnap, (s) => {
+  fbSnap.forEach((s) => {
     newArray.push(s.val())
   })
 

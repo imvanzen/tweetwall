@@ -12,7 +12,7 @@ const leadMap = (l) => ({
   name: l.name,
   screenName: l.screen_name,
   profileImage: l.profile_image_url,
-  tweetsCount: 0
+  tweetsCount: l.tweets_count
 })
 
 const tweetMap = (t) => ({
@@ -20,7 +20,8 @@ const tweetMap = (t) => ({
   text: t.text,
   authorName: t.user.name,
   authorAccountName: t.user.screen_name,
-  createdAt: t.created_at
+  createdAt: t.created_at,
+  timestamp: t.timestamp_ms
 })
 
 // todo parse tweets here before puts into base!!!
