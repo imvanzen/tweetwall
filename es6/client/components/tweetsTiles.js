@@ -6,7 +6,7 @@ import React, {Component} from 'react'
 import {timeAgo, tweetFormat} from './../utils'
 
 const tweetTileItem = ({id, author, message, created}, index) => (
-  <div className='tweet-item' key={index}>
+  <div className='tweet-tile' key={index}>
     <b>{author}</b> tweets {timeAgo(created)}:
     <br/>
     <i>{tweetFormat(message)}</i>
@@ -16,8 +16,6 @@ const tweetTileItem = ({id, author, message, created}, index) => (
 export default class TweetsTiles extends Component {
   render () {
     const {tweetsList} = this.props
-
-    console.log(tweetsList)
 
     return (
       <div className='tweets-tiles'>
