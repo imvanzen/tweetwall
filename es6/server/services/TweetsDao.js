@@ -7,7 +7,7 @@ import Fireproof from 'fireproof'
 import Promise from 'bluebird'
 
 import {
-  mapResponseToSet,
+  mapResponseToArray,
   logAndThrowError,
   passThrough
 } from './../utils'
@@ -25,28 +25,44 @@ class TweetsDao {
 
   putTweet (tweet) {
     return this.dbRef
-      .child(`tweets/${tweet.id}`)
+      .child(`tweets/${tweet.id_str}`)
       .set(tweet)
       .then(passThrough, logAndThrowError(debug, 'putTweet'))
+  }
+
+  putLead (lead) {
+    return this.dbRef
+      .child(`leads/${lead.id_str}`)
+      .set(lead)
+      .then(passThrough, logAndThrowError(debug, 'putLead'))
   }
 
   getTweets () {
     return this.dbRef.child('tweets')
       .once('value')
-      .then(mapResponseToSet, logAndThrowError(debug, 'getTweets'))
-  }
-
-  putLead (lead) {
-    return this.dbRef
-      .child(`leads/${lead.id}`)
-      .set(lead)
-      .then(passThrough, logAndThrowError(debug, 'putLead'))
+      .then(mapResponseToArray, logAndThrowError(debug, 'getTweets'))
   }
 
   getLeads () {
     return this.dbRef.child('leads')
       .once('value')
-      .then(mapResponseToSet, logAndThrowError(debug, 'getLead'))
+      .then(mapResponseToArray, logAndThrowError(debug, 'getLeads'))
+  }
+
+  getLead (leadId) {
+    return this.dbRef
+      .child(`leads/${leadId}`)
+      .once('value')
+      .then((snap) => {
+        return snap.val()
+      }, logAndThrowError(debug, 'getLead'))
+  }
+
+  updateLead (leadId, leadData) {
+    return this.dbRef
+      .child(`leads/${leadId}`)
+      .update(leadData)
+      .then(passThrough, logAndThrowError(debug, 'updateLead'))
   }
 }
 

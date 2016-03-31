@@ -5,9 +5,9 @@ import config from 'config'
 import nodeDebug from 'debug'
 import Twit from 'twit'
 
-import TweetsDao from './TweetsDao'
+import TweetsService from './TweetsService'
 
-const debug = nodeDebug('tweetwall:services:twitter')
+const debug = nodeDebug('tweetwall:services:TweetsWorker')
 const twitterConfig = config.get('tweetwall.twitter')
 
 const timeout_ms = 60 * 1000
@@ -21,9 +21,7 @@ class TweetsWorker extends Twit {
       'javascript'
     ]
 
-    this.startWorking()
-
-    return this
+    return this.startWorking()
   }
 
   startWorking () {
@@ -34,10 +32,32 @@ class TweetsWorker extends Twit {
 
     debug('statuses/filter', options)
 
-    this.stream('statuses/filter', options)
+    return this.stream('statuses/filter', options)
       .on('tweet', (tweet) => {
-        debug('worker tweet', tweet.id)
-        TweetsDao.putTweet(tweet)
+        if (_.isEmpty(tweet.retweeted_status)) {
+          debug('processing tweet', tweet.id_str)
+
+          TweetsService.putTweet(tweet)
+            .then(() => {
+              const {user: lead} = tweet
+
+              return TweetsService.isLeadExists(lead.id_str)
+                .then((isExists) => {
+                  if (!isExists) {
+                    return TweetsService.putLead(lead)
+                      .then(() => {
+                        return lead
+                      })
+                  }
+                  return lead
+                })
+            })
+            .then((lead) => {
+              return TweetsService.increaseLeadTweetCount(lead.id_str)
+            })
+        } else {
+          debug('not processed', tweet.id_str)
+        }
       })
       .on('error', (err) => {
         debug('worker error', err)

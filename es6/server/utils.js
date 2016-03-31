@@ -20,20 +20,25 @@ const logAndThrowError = (debug, logMessage) => {
   }
 }
 
-const mapResponseToSet = (fbRes) => {
-  const newSet = new Set()
+const mapResponseToArray = (fbSnap) => {
+  const newArray = []
 
-  _.each(fbRes, (s) => {
-    newSet.add(s.val())
+  _.each(fbSnap, (s) => {
+    newArray.push(s.val())
   })
 
-  return newSet
+  return newArray
+}
+
+const replaceSpacesWithUnderscores = (str) => {
+  return str.replace(' ', '_')
 }
 
 export {
   prepareWebsocketResponse,
   logAndReturn,
   logAndThrowError,
-  mapResponseToSet,
-  passThrough
+  mapResponseToArray,
+  passThrough,
+  replaceSpacesWithUnderscores
 }
