@@ -40,7 +40,7 @@ export default class TweetWall extends Component {
     this.loadWall()
     setInterval(() => {
       this.loadWall()
-    }, 1000*15)
+    }, 1000*10)
   }
 
   render () {
@@ -72,7 +72,7 @@ const header = (tagsList) => (
     </figure>
     <div className='header-title-group'>
       <h1 className='header-title'>Tweet Wall</h1>
-      <h2 className='header-subtitle'>Contribute to ours event</h2>
+      <h2 className='header-subtitle'>Contribute to our event</h2>
     </div>
     <h4 className='header-hashtags'>{stringifyTags(tagsList)}</h4>
   </header>

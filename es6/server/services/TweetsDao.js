@@ -14,12 +14,13 @@ import {
 
 const debug = nodeDebug('tweetwall:services:TweetsDao')
 const {host} = config.get('tweetwall.firebase')
+const isProd = process.env.NODE_ENV === 'production'
 
 Fireproof.bless(Promise)
 
 class TweetsDao {
   constructor (dbRef) {
-    this.username = 'vanzen' // todo Integrate with login by twitter
+    this.username = isProd ? 'vanzen' : 'dev'
     this.dbRef = dbRef.child(`users/${this.username}`)
   }
 
