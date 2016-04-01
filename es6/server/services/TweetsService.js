@@ -7,13 +7,32 @@ import TweetsDao from './TweetsDao'
 
 const debug = nodeDebug('tweetwall:services:TweetsService')
 
+const fetchMediaFromTweet = (te) => {
+  if(_.isEmpty(te)) {
+    return null
+  }
+
+  const {media} = te
+
+  if (!_.isArray(media)) {
+    return null
+  }
+
+  const photoMedia = _.filter(media, (m) => m.type === 'photo')
+
+  if (_.isEmpty(photoMedia)) {
+    return null
+  }
+
+  return _.get(photoMedia, '[0].media_url', null)
+}
+
 const leadMap = (l) => ({
   id: l.id_str,
   name: l.name,
   screenName: l.screen_name,
   profileImage: l.profile_image_url,
-  tweetsCount: l.tweets_count,
-  bgColor: l.profile_sidebar_fill_color
+  tweetsCount: l.tweets_count
 })
 
 const tweetMap = (t) => ({
@@ -22,7 +41,8 @@ const tweetMap = (t) => ({
   authorName: t.user.name,
   authorAccountName: t.user.screen_name,
   createdAt: t.created_at,
-  timestamp: t.timestamp_ms
+  timestamp: t.timestamp_ms,
+  media: null // fetchMediaFromTweet(t.entities)
 })
 
 class TweetsService {
@@ -39,7 +59,7 @@ class TweetsService {
     return TweetsDao.getTweets()
       .then((tweetsList) => {
         return _(tweetsList)
-          .takeRight(15)
+          .takeRight(10)
           .map(tweetMap)
           .reverse()
           .value()

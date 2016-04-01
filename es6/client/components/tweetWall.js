@@ -27,13 +27,19 @@ export default class TweetWall extends Component {
     }
   }
 
-  componentWillMount () {
+  loadWall () {
     api.getTweets()
       .then((tweetsList) => this.setState({tweetsList}))
       .catch(({message: errorMessage}) => this.setState({errorMessage}))
     api.getLeads()
       .then((leadsList) => this.setState({leadsList}))
       .catch(({message: errorMessage}) => this.setState({errorMessage}))
+  }
+
+  componentWillMount () {
+    setInterval(() => {
+      this.loadWall()
+    }, 1000)
   }
 
   render () {
@@ -48,8 +54,8 @@ export default class TweetWall extends Component {
       <div>
         {header(tagsList)}
         <section className='main-content'>
-          <TweetsTiles tweetsList={tweetsList}/>
-          <LeadsTiles leadsList={leadsList}/>
+          {tweetsList && <TweetsTiles tweetsList={tweetsList}/>}
+          {leadsList && <LeadsTiles leadsList={leadsList}/>}
         </section>
         {footer()}
         {errorMessage && errorAlert(errorMessage)}

@@ -1,11 +1,21 @@
 'use strict'
 
-const timeAgo = (date) => {
-  return date // todo return value of 'time ago'
+import timeAgo from 'time-ago'
+import htmlTweet from 'html-tweet'
+
+const ta = timeAgo()
+const ht = htmlTweet({
+  hashtag: '<span class=\'hashtag\'><%= hashtag %></span>',
+  mention: '<span class=\'mention\'><%= mention %></span>',
+  url: '<span class=\'url\'><%= url %></span>'
+})
+
+const ago = (date) => {
+  return ta.ago(date)
 }
 
-const tweetFormat = (message) => {
-  return message // todo colorize all links, hashtags and insert emoji icons
+const format = (message) => {
+  return ht(message)
 }
 
 const stringifyTags = (tagsList) => {
@@ -18,7 +28,7 @@ const extractDataFromResponse = ({data}) => {
 
 export {
   extractDataFromResponse,
-  timeAgo,
-  tweetFormat,
+  ago,
+  format,
   stringifyTags
 }
