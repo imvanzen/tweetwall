@@ -39,7 +39,7 @@ export default class TweetWall extends Component {
   componentWillMount () {
     setInterval(() => {
       this.loadWall()
-    }, 1000)
+    }, 1000*15)
   }
 
   render () {
