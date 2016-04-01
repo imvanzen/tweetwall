@@ -59,7 +59,7 @@ export default class TweetWall extends Component {
 }
 
 const header = (tagsList) => (
-  <header className='main-header'>
+  <header className='main-header clearfix'>
     <figure className='header-logo'>
       <img src='/img/rspective.png' alt='rspective'/>
     </figure>
