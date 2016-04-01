@@ -29,14 +29,15 @@ export default class TweetWall extends Component {
 
   loadWall () {
     api.getTweets()
-      .then((tweetsList) => this.setState({tweetsList}))
+      .then((tweetsList) => this.setState({tweetsList, errorMessage: null}))
       .catch(({message: errorMessage}) => this.setState({errorMessage}))
     api.getLeads()
-      .then((leadsList) => this.setState({leadsList}))
+      .then((leadsList) => this.setState({leadsList, errorMessage: null}))
       .catch(({message: errorMessage}) => this.setState({errorMessage}))
   }
 
   componentWillMount () {
+    this.loadWall()
     setInterval(() => {
       this.loadWall()
     }, 1000*15)
@@ -79,7 +80,7 @@ const header = (tagsList) => (
 
 const footer = () => (
   <footer className='main-footer'>
-    <div>Created by <a href='http://imvanzen.com' title='I&apos;m vanzen'>vanzen</a></div>
+    <div>Created by <a href='http://imvanzen.com' title='I&apos;m vanzen'>@imvanzen</a></div>
   </footer>
 )
 
