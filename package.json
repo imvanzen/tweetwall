@@ -13,7 +13,7 @@
     "dev-server": "DEBUG=tweetwall:* node_modules/.bin/nodemon -w es6 node_modules/.bin/babel-node es6/server",
     "dev-client": "DEBUG=tweetwall:* node_modules/.bin/babel-node webpack",
     "dev": "npm run dev-server & npm run dev-client",
-    "start": "DEBUG=tweetwall:* NODE_ENV=production node es5/server",
+    "start": "DEBUG=tweetwall:* NODE_ENV=production node es5/server > runtime.log 2>&1",
     "test": "echo \"No tests implemented yet\" && exit 1",
     "postinstall": "npm run test & npm run build"
   },

@@ -36,3 +36,20 @@ body {
     height: 0;
   }
 }
+
+.main-error {
+  width: 300px;
+  position: absolute;
+  z-index: 3;
+  background-color: red;
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+  color: #FFF;
+  font-weight: bold;
+  opacity: 0.8;
+  top: 50%;
+  left: 50%;
+  margin-left: -150px;
+  margin-top: -100px;
+}
