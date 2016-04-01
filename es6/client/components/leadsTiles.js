@@ -3,7 +3,7 @@
 import _ from 'lodash'
 import React, {Component} from 'react'
 
-const leadTileItem = ({id, name, screenName, tweetsCount, profileImage}, index) => (
+const leadTileItem = ({id, name, screenName, tweetsCount, profileImage, bgColor}, index) => (
   <div className='lead-tile' key={index}>
     <div className='tile-wrapper'>
       <figure className='lead-profile-img'>
@@ -24,6 +24,7 @@ export default class LeadsTiles extends Component {
 
     return (
       <div className='leads-tiles'>
+        <div className='tiles-header'><span className='header-label'>Leaders</span></div>
         {_.map(leadsList, leadTileItem)}
       </div>
     )

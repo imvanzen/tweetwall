@@ -12,7 +12,8 @@ const leadMap = (l) => ({
   name: l.name,
   screenName: l.screen_name,
   profileImage: l.profile_image_url,
-  tweetsCount: l.tweets_count
+  tweetsCount: l.tweets_count,
+  bgColor: l.profile_sidebar_fill_color
 })
 
 const tweetMap = (t) => ({
