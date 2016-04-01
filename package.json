@@ -15,7 +15,8 @@
     "dev": "npm run dev-server & npm run dev-client",
     "start": "DEBUG=tweetwall:* NODE_ENV=production node es5/server > runtime.log 2>&1",
     "test": "echo \"No tests implemented yet\" && exit 1",
-    "postinstall": "npm run test & npm run build"
+    "postinstall": "npm run test & npm run build",
+    "random-tweet": "DEBUG=tweetwall:* node ./bin/getRandomTweet.js"
   },
   "repository": {
     "type": "git",

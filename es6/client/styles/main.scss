@@ -6,6 +6,10 @@
 @import "tweets_tiles";
 @import "leads_tiles";
 
+html {
+  padding: 24px 39px 0 39px;
+}
+
 *, *:before, *:after {
   box-sizing: border-box;
 }
@@ -23,6 +27,7 @@ a {
 }
 
 body {
+  position: relative;
   @extend .open-sans
 }
 

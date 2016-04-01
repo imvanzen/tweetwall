@@ -42,7 +42,7 @@ const tweetMap = (t) => ({
   authorAccountName: t.user.screen_name,
   createdAt: t.created_at,
   timestamp: t.timestamp_ms,
-  media: null // fetchMediaFromTweet(t.entities)
+  media: fetchMediaFromTweet(t.entities)
 })
 
 class TweetsService {
@@ -59,7 +59,7 @@ class TweetsService {
     return TweetsDao.getTweets()
       .then((tweetsList) => {
         return _(tweetsList)
-          .takeRight(10)
+          .takeRight(30)
           .map(tweetMap)
           .reverse()
           .value()
